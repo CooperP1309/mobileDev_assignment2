@@ -69,20 +69,20 @@ class DishDAO {
             return "No id selected"
         }
         if !isStringAnInt(stringNumber: dishForm.id) {
-            return "Please use a \nnumber id"
+            return "Please use a number id"
         }
         if !db.retrieveById(theId: Int16(dishForm.id)!).isEmpty {
-            return "Please choose an\n available id"
+            return "Please choose an available id"
         }
         
         // validate dishName
         if dishForm.dishName.isEmpty {
-            return "Please enter a\ndish name"
+            return "Please enter a dish name"
         }
         
         // validate dishType
         if dishForm.dishType.isEmpty {
-            return "Please enter a\ndish type"
+            return "Please enter a dish type"
         }
         
         // validate ingredients
@@ -95,7 +95,7 @@ class DishDAO {
             return "Please enter price"
         }
         if !isStringAFloat(stringNumber: dishForm.price) {
-            return "Please use a\n decimal price"
+            return "Please use a decimal price"
         }
         
         return ""
@@ -108,17 +108,17 @@ class DishDAO {
             return "No id selected"
         }
         if !isStringAnInt(stringNumber: dishForm.id) {
-            return "Please use a \nnumber id"
+            return "Please use a number id"
         }
         
         // validate dishName
         if dishForm.dishName.isEmpty {
-            return "Please enter a\ndish name"
+            return "Please enter a dish name"
         }
         
         // validate dishType
         if dishForm.dishType.isEmpty {
-            return "Please enter a\ndish type"
+            return "Please enter a dish type"
         }
         
         // validate ingredients
@@ -131,7 +131,7 @@ class DishDAO {
             return "Please enter price"
         }
         if !isStringAFloat(stringNumber: dishForm.price) {
-            return "Please use a\n decimal price"
+            return "Please use a decimal price"
         }
         
         return ""

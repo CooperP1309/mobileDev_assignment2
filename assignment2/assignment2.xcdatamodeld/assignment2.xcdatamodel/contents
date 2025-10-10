@@ -8,4 +8,17 @@
         <attribute name="ingredients" optional="YES" attributeType="String"/>
         <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="Order" representedClassName="Order" syncable="YES" codeGenerationType="class">
+        <attribute name="diningOption" optional="YES" attributeType="String"/>
+        <attribute name="dishes" optional="YES" attributeType="String"/>
+        <attribute name="orderID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="tableNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="OrderProgress" representedClassName="OrderProgress" syncable="YES" codeGenerationType="class">
+        <attribute name="orderID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="progress" optional="YES" attributeType="String"/>
+        <attribute name="timeCompleted" optional="YES" attributeType="String"/>
+        <attribute name="timeCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
 </model>
