@@ -126,9 +126,115 @@ class OrderDAO {
         records.enumerateLines {
             (line, stop) in
             
-            sortedRecords.append(line)
+            var order = line
+            
+            if self.isTakeAwayOrder(order: order) {
+                order = self.setTakeAwayTableNum(order: line)
+            }
+            
+            sortedRecords.append(order)
         }
         
         return sortedRecords
+    }
+    
+    func isTakeAwayOrder(order: String) -> Bool {
+        
+        // extract the dining type
+        var startIndex = getIndexOfNthComma(order: order, n: 2)
+        let endIndex = getIndexOfNthComma(order: order, n: 3)
+        var extractedDiningOpt = ""
+        
+        while startIndex < endIndex {
+            extractedDiningOpt.append(order[startIndex])
+            
+            // REMEMBER TO INCREMENT
+            startIndex = order.index(after: startIndex)
+        }
+        
+        // final processing of dining opt buffer
+        extractedDiningOpt.removeLast()
+        let diningOpt = extractedDiningOpt.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if diningOpt == "Take Away" {
+            print("DETECTED TAKEAWAY FROM: " + order)
+            return true
+        }
+        
+        return false
+    }
+    
+    func setTakeAwayTableNum(order:String) -> String{   // for takeaway, we display table num as N/A
+        
+        var startIndex1 = order.startIndex
+        let endIndex1 = getIndexOfNthComma(order: order, n: 1)
+        var startIndex2 = getIndexOfNthComma(order: order, n: 2)
+        let endIndex2 = order.endIndex
+        var tableNumBuffer = ""
+        
+        // appending of first half
+        while startIndex1 < endIndex1 {
+            tableNumBuffer.append(order[startIndex1])
+            
+            // REMEMBER TO INCREMENT
+            startIndex1 = order.index(after: startIndex1)
+        }
+        
+        tableNumBuffer.append(" N/A,")
+        
+        // appending of remain half
+        while startIndex2 < endIndex2 {
+            tableNumBuffer.append(order[startIndex2])
+            
+            // REMEMBER TO INCREMENT
+            startIndex2 = order.index(after: startIndex2)
+        }
+        
+        print("PRODUCE RECORD:\n" + tableNumBuffer)
+        
+        return tableNumBuffer
+    }
+    
+    func getIndexOfNthComma(order: String, n: Int) -> String.Index {
+        
+        var count = 0, currentIndex = order.startIndex
+        
+        while currentIndex < order.endIndex {
+            if order[currentIndex] == "," {
+                count += 1
+            }
+            
+            // remember to increment before possible break as not to include comma itself
+            currentIndex = order.index(after: currentIndex)
+            if count == n { // end loop once the desired occurence is met
+                break
+            }
+        }
+        
+        return currentIndex
+    }
+    
+    func stringToOrderForm(string: String) -> OrderForm {
+        
+        var properties = string.components(separatedBy:",")
+        
+        // usual logging
+        print("Converting String: " + string + "\n" )
+        print("Resulting order properties:\n")
+        properties.forEach{ order in
+            print(order)
+        }
+
+        // remove whitespaces
+        properties = properties.map {$0.trimmingCharacters(in: .whitespaces)}
+        
+        let order = OrderForm(
+            orderID: properties[0],
+            tableNum: properties[1],
+            diningOpt: properties[2],
+            dishes: properties[3],
+            price: properties[4])
+            
+        return order
     }
 }
