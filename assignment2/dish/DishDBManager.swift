@@ -194,6 +194,44 @@ class DishDBManager: NSObject {
         
         return "Delete Successful"
     }
+    
+    func retrieveByName(theName: String)->String {
+        var record = "" //for returning records
+        
+        // setting up app delegation
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return record
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        // actual fetching of data
+        let fetchRequest: NSFetchRequest<Dish> = Dish.fetchRequest()
+        //fetchRequest.predicate(format: "%K == %@", "id", id as CVarArg)
+        
+        // Make a predicate asking only for sessions of a certain "projectId"
+        let query = NSPredicate(format: "dishName == %@", theName)
+        fetchRequest.predicate = query
+        fetchRequest.fetchLimit = 1 // Limit to one result as we're expecting a single object
+        
+        do {
+        let dish = try managedContext.fetch(fetchRequest)
+            for trans in dish {
+                //for each record, get the values
+                let id = trans.id
+                let name = trans.dishName
+                let type = trans.dishType
+                let ingredients = trans.ingredients
+                let price = trans.price
+                let image = trans.image
+                //add info to returning records
+                record = record + "\(id), \(name!), \(type!), \(ingredients!), \(price)  \(image!)\n"
+            }
+        }
+        catch let error as NSError{
+            print("Error \(error)")
+        }
+        return record
+    }
 }
 
 

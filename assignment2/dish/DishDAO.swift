@@ -323,4 +323,35 @@ class DishDAO {
         
         return dishName.trimmingCharacters(in: .whitespacesAndNewlines)
     }
+    
+    func getSelectedDishArray(dishNames: String)-> [String] {
+        
+        var dishArray: [String] = []
+        
+        // start by extracting each dish name into array of dish names
+        dishArray = separateDishNames(dishNames: dishNames)
+        
+        // retrieve each record by their respective names and assign array val to that result
+        var index = 0
+        while index < dishArray.count {
+            let currentDish = db.retrieveByName(theName: dishArray[index])
+            dishArray[index] = currentDish
+            index += 1
+        }
+        
+        return dishArray
+    }
+    
+    func separateDishNames(dishNames: String) -> [String] {
+        
+        var dishNameArray = dishNames.components(separatedBy: " | ")
+        
+        var index = 0
+        while index < dishNameArray.count {
+            dishNameArray[index] = dishNameArray[index].trimmingCharacters(in: .whitespacesAndNewlines)
+            index += 1
+        }
+        
+        return dishNameArray
+    }
 }

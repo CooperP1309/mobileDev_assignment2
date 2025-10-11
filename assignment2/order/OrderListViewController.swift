@@ -12,6 +12,7 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
     // global vars/objecst
     var dao = OrderDAO()
     var selectedRows: [IndexPath] = []
+    var targetOrder = OrderForm()
     
     // declaring of UI objects
     //  - text
@@ -54,12 +55,20 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func handleSelectedRows() {
+    
         if tableOrders.indexPathsForSelectedRows == nil {
             btnEditOrder.isEnabled = false
             return
         }
-        btnEditOrder.isEnabled = true
+   
         selectedRows = tableOrders.indexPathsForSelectedRows!
+        
+        if selectedRows.count > 1 {
+            btnEditOrder.isEnabled = false
+            return
+        }
+        
+        btnEditOrder.isEnabled = true
     }
     
     // ---- VIEW INITIALIZE FUNCTION ----
@@ -104,22 +113,34 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
     // --- Action Functions ----
     
     @IBAction func pressEditOrder(_ sender: Any) {
-        
-        // only proceed to edit form if one and exactly one form is selected
-        if selectedRows.count != 1 {
-            textResponse.text = "Please select only one row for editing..."
-        }
-        else {
-            // get the selected order string...
-            let selectedOrder = selectedRows.map { orders[$0.row] }
-            
-            // process it into a valid form object (i.e. struct of strings)
-            var orderForm = dao.stringToOrderForm(string: selectedOrder[0])
-            
-            // prepare it for the editOrderForm
-            
-        }
-
     }
+
+    // prepare function packs data struct for use in next view segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if segue.identifier != "OrderUpdateForm" {
+            return
+        }
+        
+        // Unwrap real destination (handles nav-controller wrapping)
+        let destination: OrderUpdateViewController
+        if let nav = segue.destination as? UINavigationController,
+           let top = nav.topViewController as? OrderUpdateViewController {
+            destination = top
+        } else if let vc = segue.destination as? OrderUpdateViewController {
+            destination = vc
+        } else {
+            assertionFailure("Unexpected destination: \(segue.destination)")
+            return
+        }
+        
+        // get the selected order string...
+        let selectedOrder = selectedRows.map { orders[$0.row] }
+        
+        // process it into a valid form object (i.e. struct of strings)
+        destination.order = dao.stringToOrderForm(string: selectedOrder[0])
     
+        // testing it was populated
+        print("Dest Order Dishes: " + destination.order.dishes)
+    }
 }

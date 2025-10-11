@@ -21,4 +21,12 @@ struct OrderForm {
         self.dishes = dishes
         self.price = price
     }
+
+    init() {
+        self.orderID = ""
+        self.tableNum = ""
+        self.diningOpt = ""
+        self.dishes = ""
+        self.price = ""
+    }
 }
