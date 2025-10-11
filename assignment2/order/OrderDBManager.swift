@@ -36,7 +36,6 @@ class OrderDBManager: NSObject {
         }
     }
     
-    /*
     func retrieveAllRows() -> String{
         var records = "" //for returning records
         
@@ -47,19 +46,19 @@ class OrderDBManager: NSObject {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         // actual fetching of data
-        let fetchRequest: NSFetchRequest<Dish> = Dish.fetchRequest()
+        let fetchRequest: NSFetchRequest<Order> = Order.fetchRequest()
         do {
-        let dish = try managedContext.fetch(fetchRequest)
-            for trans in dish {
+        let order = try managedContext.fetch(fetchRequest)
+            for trans in order {
                 //for each record, get the values
-                let id = trans.id
-                let name = trans.dishName
-                let type = trans.dishType
-                let ingredients = trans.ingredients
+                let id = trans.orderID
+                let tableNum = trans.tableNumber
+                let diningOpt = trans.diningOption
+                let dishes = trans.dishes
                 let price = trans.price
-                let image = trans.image
+            
                 //add info to returning records
-                records = records + "\(id), \(name!), \(type!), \(ingredients!), \(price), \(image!) \n"
+                records = records + "\(id), \(tableNum), \(diningOpt!), \(dishes!), \(price)\n"
             }
         }
         catch let error as NSError{
@@ -67,10 +66,6 @@ class OrderDBManager: NSObject {
         }
         return records
     }
-
-     */
-
-
 
     func retrieveById(theId:Int16)->String {
         var record = "" //for returning records

@@ -75,8 +75,18 @@ class DishListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // setting row params
         cell.textLabel?.numberOfLines = 0
-            cell.textLabel?.lineBreakMode = .byWordWrapping
+        cell.textLabel?.lineBreakMode = .byWordWrapping
         cell.textLabel!.text = dishes[indexPath.row]
+        
+        // disable interactivity for header cells and configure header text properties
+        if dishes[indexPath.row] == "Drink" || dishes[indexPath.row] == "Entree" || dishes[indexPath.row] == "Main" {
+            cell.isUserInteractionEnabled = false
+            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        }
+        else {
+            cell.isUserInteractionEnabled = true
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
+        }
 
         return cell;
     }

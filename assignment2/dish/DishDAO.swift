@@ -62,6 +62,62 @@ class DishDAO {
         return result
     }
     
+    func getPriceFromSelected(dishArray: [String]) -> Float {
+        
+        var totalPrice: Float = 0.0
+        
+        // iterate through dish array
+        for dish in dishArray {
+            totalPrice += getPriceFromDishString(dish: dish)
+        }
+        
+        return totalPrice
+    }
+    
+    func getPriceFromDishString(dish: String) -> Float {
+        
+        // get the indexes of the price section in dish string
+        let startPriceIndex = getIndexOfNthComma(dish: dish, n: 4)
+        let endPriceIndex = getIndexOfNthComma(dish: dish, n: 5)
+        var currentIndex = startPriceIndex
+        
+        // temporary string to extract price into
+        var priceBuffer: String = ""
+        
+        while currentIndex < endPriceIndex {
+            priceBuffer.append(dish[currentIndex])
+            
+            // remember to increment
+            currentIndex = dish.index(after: currentIndex)
+        }
+        
+        // final processing of price buffer
+        priceBuffer.removeLast()
+        let priceString = priceBuffer.trimmingCharacters(in: .whitespacesAndNewlines)
+        //print("Extracted price from " + dish + ": " + priceString)
+        
+        return Float(priceString)!
+    }
+    
+    func getIndexOfNthComma(dish: String, n: Int) -> String.Index {
+        
+        var count = 0, currentIndex = dish.startIndex
+        
+        while currentIndex < dish.endIndex {
+            if dish[currentIndex] == "," {
+                count += 1
+            }
+            
+            // remember to increment before possible break as not to include comma itself
+            currentIndex = dish.index(after: currentIndex)
+            if count == n { // end loop once the desired occurence is met
+                break
+            }
+        }
+        
+        return currentIndex
+    }
+    
     func validateDishForm(dishForm: DishForm)->String {
         
         // validate id
@@ -153,15 +209,28 @@ class DishDAO {
         
         // declare memory for the sorted records
         var sortedRecords: [String] = []
+        var prevDishType: String = ""
         
         // iterate through each line in the "records" string
         records.enumerateLines {
             (line, stop) in
+            
+            // extract the dish type from each line
+            let dish = self.stringToDishForm(string: line)
+            
+           // if a new dish type is found, insert a header record and re assign
+            if dish.dishType != prevDishType {
+                sortedRecords.append(dish.dishType)
+                prevDishType = dish.dishType
+            }
+            
             sortedRecords.append(line)
         }
         
         return sortedRecords
     }
+    
+    
     
     func isStringAnInt(stringNumber: String) -> Bool {
         
@@ -211,5 +280,47 @@ class DishDAO {
         let newIngredients = ingredients.replacingOccurrences(of: ",", with: "|")
         
         return newIngredients
+    }
+    
+    func getSelectedDishNames(selectedDishes: [String]) -> String {
+        
+        var dishNames: String = ""
+        
+        for dish in selectedDishes {
+            dishNames.append(getDishNameFromDishString(dish: dish))
+            dishNames.append(" | ")
+        }
+        
+        if selectedDishes.count != 0 {  // remove last appeneded divider
+            dishNames.removeLast()
+            dishNames.removeLast()
+            dishNames.removeLast()      // im lazy and hate swift please ignore this
+        }
+        
+        return dishNames
+    }
+    
+    func getDishNameFromDishString(dish: String) -> String {
+        
+        var dishName: String = ""
+        
+        // get the indexes of the dish name section
+        var startIndex = getIndexOfNthComma(dish: dish, n: 1)
+        let endIndex = getIndexOfNthComma(dish: dish, n: 2)
+        
+        // extracting the name
+        while startIndex < endIndex {
+            dishName.append(dish[startIndex])
+            
+            // DONT FORGET TO INCREMENT
+            startIndex = dish.index(after: startIndex)
+        }
+        
+        print("Name extracted")
+        
+        // final processing of dishName
+        dishName.removeLast()
+        
+        return dishName.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }

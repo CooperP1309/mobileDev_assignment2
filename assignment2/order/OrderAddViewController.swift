@@ -9,12 +9,11 @@ import UIKit
 
 class OrderAddViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    
-
     // declare order DAO for db operations
-    var dao = OrderDAO()
+    var daoOrder = OrderDAO()
+    var daoDish = DishDAO()
     
-    // declaring of UI objects
+    // ---- declaring of UI objects ----
     //  - buttons
     @IBOutlet weak var btnReturn: UIButton!
     @IBOutlet weak var btnAddDish: UIButton!
@@ -33,25 +32,64 @@ class OrderAddViewController: UIViewController, UITableViewDelegate, UITableView
     //  - tableView related
     @IBOutlet weak var tableDishes: UITableView!
     
-    // tableView init functions
-    var dishes: [String] = ["Chips", "Burger", "Ribs"]
+    // ---- tableView init functions ----
+    var dishes: [String] = []
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return dishes.count
     }
     
+    // initializing of tableview cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         // setting text from units array via indexing
-        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell0",
-        for: indexPath)
+        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell0", for: indexPath)
         
         // setting row params
         cell.textLabel?.numberOfLines = 0
-            cell.textLabel?.lineBreakMode = .byWordWrapping
+        cell.textLabel?.lineBreakMode = .byWordWrapping
         cell.textLabel!.text = dishes[indexPath.row]
+        
+        // disable interactivity for header cells and configure header text properties
+        if dishes[indexPath.row] == "Drink" || dishes[indexPath.row] == "Entree" || dishes[indexPath.row] == "Main" {
+            cell.isUserInteractionEnabled = false
+            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        }
+        else {
+            cell.isUserInteractionEnabled = true
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
+        }
 
         return cell;
     }
     
+    // handler for when a cell is selected
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        updatePriceFromSelectedDishes()
+    }
+    
+    // handler for when a cell is DEselected
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        updatePriceFromSelectedDishes()
+    }
+    
+    func updatePriceFromSelectedDishes() {
+        // if there are selected rows
+        if let selectedRows = tableDishes.indexPathsForSelectedRows {
+            
+            // compile each selected row into array
+            let selectedDishes = selectedRows.map { dishes[$0.row] }
+            print("selected dishes:\n\(selectedDishes)")
+            
+            // adjust the price to account for new selection of dishes
+            let price = daoDish.getPriceFromSelected(dishArray: selectedDishes)
+            editPrice.text = String(price)
+        }
+        else {
+            print("no dishes selected")
+            editPrice.text = "0.0"
+        }
+    }
     
     // ---- INITIALIZE VIEW FUNCTION ----
     override func viewDidLoad() {
@@ -61,9 +99,20 @@ class OrderAddViewController: UIViewController, UITableViewDelegate, UITableView
         stepTableNo.wraps = true
         stepTableNo.autorepeat = true
         stepTableNo.maximumValue = 12
+        
+        // initialize tableView properties
+        tableDishes.allowsMultipleSelection = true
+        
+        // on startup, load the dishes db via retrieve()
+        dishes = daoDish.retrieveAllDishes()
+        print("Retrieved Dishes from db:\n")
+        dishes.forEach{ dish in
+            print(dish)
+        }
+        print("\n")
      }
     
-    // action functions
+    // ---- action functions ----
     @IBAction func pressReturn(_ sender: Any) {
         dismiss(animated: true)
     }
@@ -80,19 +129,16 @@ class OrderAddViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func pressSegDine(_ sender: Any) {
         if getDiningOpt() == "Take Away" {
-            stepTableNo.alpha = 0.30
+            stepTableNo.isEnabled = false
             textTableNum.alpha = 0.0
         }
         else {
-            stepTableNo.alpha = 1.0
+            stepTableNo.isEnabled = true
             textTableNum.alpha = 1.0
         }
     }
     
-    
     func addOrder() {
-        
-        print("Adding order")
         
         // table number -> eat in logic
         var tableNum: String
@@ -103,24 +149,31 @@ class OrderAddViewController: UIViewController, UITableViewDelegate, UITableView
             tableNum = "0"
         }
         
-        // collet form data into a passable struct (i.e. string only)
+        // compiling of selected dish names for order struct
+        var dishNames = ""
+        if let selectedRows = tableDishes.indexPathsForSelectedRows {
+            let selectedDishes = selectedRows.map { dishes[$0.row] }
+            dishNames = daoDish.getSelectedDishNames(selectedDishes: selectedDishes)
+        }
+        
+        print("\nRetrieved dish names:\n" + dishNames)
+        
+        // collet form data into a passable struct (i.e. string only struct)
         let order = OrderForm(
             orderID: editOrderID.text!,
             tableNum: tableNum,
             diningOpt: getDiningOpt(),
-            dishes: editDishes.text!,
+            dishes: dishNames,
             price: editPrice.text!)
         
         // push struct into DAO class for validation and db handling
-        let results = dao.addOrderForm(orderForm: order)
+        let results = daoOrder.addOrderForm(orderForm: order)
         
         // notify user of success/failure
-
         textResponse.text = results
     }
 
     func getDiningOpt() -> String {
         return segDiningOpt.titleForSegment(at: segDiningOpt.selectedSegmentIndex)!
     }
-
 }

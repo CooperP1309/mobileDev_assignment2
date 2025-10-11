@@ -45,6 +45,8 @@ class OrderDAO {
     
     func validateOrderForm(orderForm: OrderForm)->String {
         
+        print("\nValidating order...")
+        
         // validate id
         if orderForm.orderID.isEmpty{
             return "No id selected"
@@ -101,5 +103,32 @@ class OrderDAO {
             return true
         }
         return false
+    }
+    
+    func retrieveAllOrders()->[String] {
+        
+        // get all dishes in a string
+        let orders = db.retrieveAllRows()
+        
+        // sort said dishes into string arra
+        var sortedOrders: [String] = []
+        sortedOrders = sortRecords(records:orders)
+        
+        return sortedOrders
+    }
+    
+    func sortRecords(records:String)->[String] {
+        
+        // declare memory for the sorted records
+        var sortedRecords: [String] = []
+        
+        // iterate through each line in the "records" string
+        records.enumerateLines {
+            (line, stop) in
+            
+            sortedRecords.append(line)
+        }
+        
+        return sortedRecords
     }
 }

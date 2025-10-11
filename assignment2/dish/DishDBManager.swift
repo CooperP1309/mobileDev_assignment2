@@ -46,6 +46,11 @@ class DishDBManager: NSObject {
         
         // actual fetching of data
         let fetchRequest: NSFetchRequest<Dish> = Dish.fetchRequest()
+        
+        // initializing and attaching of sort descriptor to fetch request
+        let sortDescriptor = NSSortDescriptor(key: "dishType", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
         do {
         let dish = try managedContext.fetch(fetchRequest)
             for trans in dish {
