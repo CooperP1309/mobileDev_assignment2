@@ -464,6 +464,7 @@
                                 <buttonConfiguration key="configuration" style="filled" title="Update Order"/>
                                 <connections>
                                     <action selector="pressAdd:" destination="DBM-Xb-ey2" eventType="touchUpInside" id="sje-vg-m8X"/>
+                                    <action selector="pressUpdate:" destination="9aS-IG-KCz" eventType="touchUpInside" id="aH7-eD-wb0"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Jp-52-eWN">
@@ -493,11 +494,23 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OFL-Hg-Gk2">
+                                <rect key="frame" x="271" y="149" width="74" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Delete">
+                                    <color key="baseForegroundColor" systemColor="systemRedColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="pressDelete:" destination="9aS-IG-KCz" eventType="touchUpInside" id="af8-cw-ewa"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="PdW-uS-23Q"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
+                        <outlet property="btnDeleteOrder" destination="OFL-Hg-Gk2" id="mfN-N9-CIx"/>
                         <outlet property="btnUpdateOrder" destination="wOb-9S-ILo" id="HKi-a9-Sj1"/>
                         <outlet property="editPrice" destination="bYJ-CE-9Z6" id="dya-E3-or6"/>
                         <outlet property="segDiningOpt" destination="v5R-1N-ZzW" id="z79-Ru-DSp"/>

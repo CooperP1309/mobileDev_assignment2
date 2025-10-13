@@ -105,8 +105,7 @@ class OrderDBManager: NSObject {
         return record
     }
     
-    /*
-    func updateRow(dishFinal: DishFinal)-> String{
+    func updateRow(orderFinal: OrderFinal)-> String{
         
         // set the core data to access the dish Entity and declare a context
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -115,11 +114,10 @@ class OrderDBManager: NSObject {
         //use this in every function for DB
         
          // actual fetching of data
-         let fetchRequest: NSFetchRequest<Dish> = Dish.fetchRequest()
-         //fetchRequest.predicate(format: "%K == %@", "id", id as CVarArg)
+         let fetchRequest: NSFetchRequest<Order> = Order.fetchRequest()
          
          // Make a predicate asking only for sessions of a certain "projectId"
-        let query = NSPredicate(format: "id == %d", dishFinal.id)
+        let query = NSPredicate(format: "orderID == %d", orderFinal.orderID)
          fetchRequest.predicate = query
          fetchRequest.fetchLimit = 1 // Limit to one result as we're expecting a single object
       
@@ -127,15 +125,14 @@ class OrderDBManager: NSObject {
             let results = try managedContext.fetch(fetchRequest)
             
             // if a dish is found
-            if let targetDish = results.first {
+            if let targetOrder = results.first {
                 
                 // updating of fetched dishes fields
-                targetDish.setValue(dishFinal.id, forKey: "id")
-                targetDish.setValue(dishFinal.dishName, forKey: "dishName")
-                targetDish.setValue(dishFinal.dishType, forKey: "dishType")
-                targetDish.setValue(dishFinal.ingredients, forKey: "ingredients")
-                targetDish.setValue(dishFinal.price, forKey: "price")
-                targetDish.setValue(dishFinal.image, forKey: "image")
+                targetOrder.setValue(orderFinal.orderID, forKey: "orderID")
+                targetOrder.setValue(orderFinal.tableNum, forKey: "tableNumber")
+                targetOrder.setValue(orderFinal.diningOpt, forKey: "diningOption")
+                targetOrder.setValue(orderFinal.dishes, forKey: "dishes")
+                targetOrder.setValue(orderFinal.price, forKey: "price")
                 
                 // make sure to save changes in storage (not just memory)
                 try managedContext.save()
@@ -161,11 +158,11 @@ class OrderDBManager: NSObject {
         //use this in every function for DB
         
          // actual fetching of data
-         let fetchRequest: NSFetchRequest<Dish> = Dish.fetchRequest()
+         let fetchRequest: NSFetchRequest<Order> = Order.fetchRequest()
          //fetchRequest.predicate(format: "%K == %@", "id", id as CVarArg)
          
          // Make a predicate asking only for sessions of a certain "projectId"
-        let query = NSPredicate(format: "id == %d", id)
+        let query = NSPredicate(format: "orderID == %d", id)
          fetchRequest.predicate = query
          fetchRequest.fetchLimit = 1 // Limit to one result as we're expecting a single object
       
@@ -173,9 +170,9 @@ class OrderDBManager: NSObject {
             let results = try managedContext.fetch(fetchRequest)
             
             // if a dish is found
-            if let targetDish = results.first {
+            if let targetOrder = results.first {
                 
-                managedContext.delete(targetDish)
+                managedContext.delete(targetOrder)
                 
                 // make sure to save changes in storage (not just memory)
                 try managedContext.save()
@@ -191,7 +188,6 @@ class OrderDBManager: NSObject {
         
         return "Delete Successful"
     }
-     */
 }
 
 

@@ -223,8 +223,8 @@ class DishDAO {
                 sortedRecords.append(dish.dishType)
                 prevDishType = dish.dishType
             }
-            
-            sortedRecords.append(line)
+            // ensure whitespaces are trimmed before storing
+            sortedRecords.append(line.trimmingCharacters(in: .whitespacesAndNewlines))
         }
         
         return sortedRecords
@@ -334,7 +334,13 @@ class DishDAO {
         // retrieve each record by their respective names and assign array val to that result
         var index = 0
         while index < dishArray.count {
-            let currentDish = db.retrieveByName(theName: dishArray[index])
+            var currentDish = db.retrieveByName(theName: dishArray[index])
+            
+            // white line and missing comma processing
+            currentDish = currentDish.trimmingCharacters(in: .whitespacesAndNewlines)
+            currentDish.append(",")
+            
+            // finally storing and incrementing
             dishArray[index] = currentDish
             index += 1
         }

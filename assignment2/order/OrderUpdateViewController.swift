@@ -12,6 +12,7 @@ class OrderUpdateViewController: UIViewController, UITableViewDataSource, UITabl
     // declare global vars/objects
     var order = OrderForm()
     var dishDAO = DishDAO()
+    var orderDAO = OrderDAO()
     var dishes: [String] = []
     var selectedDishes: Set<String> = []
     
@@ -25,8 +26,9 @@ class OrderUpdateViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var editPrice: UITextField!
 
     //  - buttons
-    
     @IBOutlet weak var btnUpdateOrder: UIButton!
+    @IBOutlet weak var btnDeleteOrder: UIButton!
+    
     //  - misc
     @IBOutlet weak var stepTableNum: UIStepper!
     @IBOutlet weak var segDiningOpt: UISegmentedControl!
@@ -39,6 +41,7 @@ class OrderUpdateViewController: UIViewController, UITableViewDataSource, UITabl
         return dishes.count
     }
     
+    // function initializes each cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // setting text from units array via indexing
@@ -57,16 +60,37 @@ class OrderUpdateViewController: UIViewController, UITableViewDataSource, UITabl
         else {
             cell.isUserInteractionEnabled = true
             cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
-            
-            // for each cell containing a selected dish
-            if selectedDishes.contains(cell.textLabel!.text!) {
-                print("Trying to select cell with record: " + dishes[indexPath.row])
-                tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-                tableView.delegate?.tableView?(tableView, didSelectRowAt: indexPath)
-            }
         }
 
         return cell;
+    }
+    
+    // handler for when a cell is selected
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        updatePriceFromSelectedDishes()
+    }
+    
+    // handler for when a cell is DEselected
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        updatePriceFromSelectedDishes()
+    }
+    
+    func updatePriceFromSelectedDishes() {
+        // if there are selected rows
+        if let selectedRows = tableDish.indexPathsForSelectedRows {
+            
+            // compile each selected row into array
+            let selectedDishes = selectedRows.map { dishes[$0.row] }
+            print("selected dishes:\n\(selectedDishes)")
+            
+            // adjust the price to account for new selection of dishes
+            let price = dishDAO.getPriceFromSelected(dishArray: selectedDishes)
+            editPrice.text = String(price)
+        }
+        else {
+            print("no dishes selected")
+            editPrice.text = "0.0"
+        }
     }
     
     // ---- VIEW INITIALIZATION FUNCTION ----
@@ -104,8 +128,19 @@ class OrderUpdateViewController: UIViewController, UITableViewDataSource, UITabl
         }
         setSegment(order: order.diningOpt)
         editPrice.text = order.price
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-
+        for (index, dish) in dishes.enumerated() {
+            if selectedDishes.contains(dish) {
+                print("marking as selected: \"" + dish + "\"")
+                let indexPath = IndexPath(row: index, section: 0)
+                tableDish.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+                tableDish.delegate?.tableView?(tableDish, didSelectRowAt: indexPath)
+            }
+        }
     }
 
     // ---- action functions ----
@@ -130,6 +165,19 @@ class OrderUpdateViewController: UIViewController, UITableViewDataSource, UITabl
         textTableNum.text = String(step)
     }
     
+    @IBAction func pressUpdate(_ sender: Any) {
+        updateOrder()
+    }
+    
+    @IBAction func pressDelete(_ sender: Any) {
+        let result = orderDAO.deleteOrder(id: order.orderID)
+        textResponse.text = result
+        
+        // return afterwards
+        dismiss(animated: true)
+    }
+    
+    // ---- action triggered functions
     
     func getDiningOpt() -> String {
         return segDiningOpt.titleForSegment(at: segDiningOpt.selectedSegmentIndex)!
@@ -150,4 +198,40 @@ class OrderUpdateViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
+    func updateOrder() {
+        
+        // table number -> eat in logic
+        var tableNum: String
+        if getDiningOpt() == "Eat In" {
+            tableNum = textTableNum.text!
+        }
+        else {
+            tableNum = "0"
+        }
+        
+        // compiling of selected dish names for order struct
+        var dishNames = ""
+        if let selectedRows = tableDish.indexPathsForSelectedRows {
+            let selectedDishes = selectedRows.map { dishes[$0.row] }
+            dishNames = dishDAO.getSelectedDishNames(selectedDishes: selectedDishes)
+        }
+        
+        print("\nRetrieved dish names:\n" + dishNames)
+        
+        // collet form data into a passable struct (i.e. string only struct)
+        let order = OrderForm(
+            orderID: textIDNum.text!,
+            tableNum: tableNum,
+            diningOpt: getDiningOpt(),
+            dishes: dishNames,
+            price: editPrice.text!)
+        
+        // push struct into DAO class for validation and db handling
+        let results = orderDAO.updateOrderForm(orderForm: order)
+        
+        // notify user of success/failure
+        textResponse.text = results
+        
+        //dismiss(animated: true)
+    }
 }
