@@ -55,6 +55,18 @@ class DishDAO {
         return result
     }
     
+    func deleteManyFromStrings(dishes: [String]) {
+        
+        print("DELETING THE FOLLOWING DISHES:")
+        for dish in dishes {
+            print(dishes)
+            
+            let dishForm = self.stringToDishForm(string: dish)
+            let result = self.deleteDish(id: dishForm.id)
+            print(result)
+        }
+    }
+    
     func deleteDish(id: String) -> String {
         
         let result = db.deleteRowById(id: Int16(id)!)

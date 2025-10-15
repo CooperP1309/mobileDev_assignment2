@@ -229,9 +229,11 @@ class OrderUpdateViewController: UIViewController, UITableViewDataSource, UITabl
         // push struct into DAO class for validation and db handling
         let results = orderDAO.updateOrderForm(orderForm: order)
         
-        // notify user of success/failure
         textResponse.text = results
         
-        //dismiss(animated: true)
+        // notify user of success/failure
+        if results == "Update Successful" {
+            dismiss(animated: true)
+        }
     }
 }

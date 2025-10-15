@@ -11,6 +11,7 @@ class DishListViewController: UIViewController, UITableViewDataSource, UITableVi
 
     // declaring DAO
     var dao = DishDAO()
+    var selectedRows: [IndexPath] = []
     
     // dish db data struct
     var dishes: [String] = []
@@ -20,6 +21,8 @@ class DishListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // declaring buttons
     @IBOutlet weak var btnAddDishForm: UIButton!
+    @IBOutlet weak var btnEditDish: UIButton!
+    @IBOutlet weak var btnDelete: UIButton!
     
     // declaring text objects
     @IBOutlet weak var textResponse: UILabel!
@@ -32,9 +35,14 @@ class DishListViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // by default, nothing is selected...
+        btnDelete.isEnabled = false
+        btnEditDish.isEnabled = false
+        
         // allow cells to fit many lines
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 88
+        tableView.allowsMultipleSelection = true
         
         // on startup, load the dishes db via retrieve()
         dishes = dao.retrieveAllDishes()
@@ -47,6 +55,10 @@ class DishListViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        // by default, nothing is selected...
+        btnDelete.isEnabled = false
+        btnEditDish.isEnabled = false
+        
         // allow cells to have greater height
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 88
@@ -93,18 +105,50 @@ class DishListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // handler for when a cell is selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        // get the data at the selected cell (indexPath)
-        let dish = dao.stringToDishForm(string: dishes[indexPath.row])
-        
-        id = dish.id
-        dishName = dish.dishName
-        dishType = dish.dishType
-        ingredients = dish.ingredients
-        price = dish.price
-        image = dish.image
+        handleSelectedRows()
     }
- 
+    
+    // handler for when a cell is DEselected
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        handleSelectedRows()
+    }
+    
+    func handleSelectedRows() {
+    
+        if tableView.indexPathsForSelectedRows == nil {
+            btnDelete.isEnabled = false
+            btnEditDish.isEnabled = false
+            return
+        }
+   
+        selectedRows = tableView.indexPathsForSelectedRows!
+        
+        if selectedRows.count > 1 {
+            btnEditDish.isEnabled = false
+            return
+        }
+        
+        btnDelete.isEnabled = true
+        btnEditDish.isEnabled = true
+    }
+    
+    
+    // ---- action and misc function ----
+    
+    @IBAction func pressDelete(_ sender: Any) {
+        
+        // get each selected orders
+        let selectedDishes = selectedRows.map { dishes[$0.row] }
+        
+        // delete them orders
+        dao.deleteManyFromStrings(dishes: selectedDishes)
+        
+        // refresh the data
+        dishes = dao.retrieveAllDishes()
+        tableView.reloadData()
+        btnDelete.isEnabled = false
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if segue.identifier != "DishUpdateForm" {

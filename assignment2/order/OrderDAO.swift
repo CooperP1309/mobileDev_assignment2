@@ -159,6 +159,21 @@ class OrderDAO {
         return ""
     }
     
+    func deleteManyFromStrings(orders: [String]) {
+        
+        print("DELETING THE FOLLOWING ORDERS:")
+        for order in orders {
+            print(order)
+        }
+        
+        // extract the id of each order and delete it
+        for order in orders {
+            let orderForm = self.stringToOrderForm(string: order)
+            let result = self.deleteOrder(id: orderForm.orderID)
+            print(result)
+        }
+    }
+    
     func isStringAnInt(stringNumber: String) -> Bool {
         
         if let _ = Int(stringNumber) {

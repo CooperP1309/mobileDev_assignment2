@@ -172,7 +172,9 @@ class OrderAddViewController: UIViewController, UITableViewDelegate, UITableView
         // notify user of success/failure
         textResponse.text = results
         
-        dismiss(animated: true)
+        if results == "Item is added" {
+            dismiss(animated: true)
+        }
     }
 
     func getDiningOpt() -> String {

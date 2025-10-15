@@ -40,7 +40,6 @@ class DishAddViewController: UIViewController {
     
     @IBAction func btnAddDish(_ sender: Any) {
         addDish()
-        dismiss(animated: true)
     }
     
     func addDish() {
@@ -60,6 +59,10 @@ class DishAddViewController: UIViewController {
         
         // notify user of success/failure
         textResponse.text = results
+        
+        if results == "Item is added" {
+            dismiss(animated: true)
+        }
     }
 }
 

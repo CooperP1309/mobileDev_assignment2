@@ -116,12 +116,25 @@
                                 <color key="textColor" systemColor="systemRedColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rAJ-6y-N3d">
+                                <rect key="frame" x="228" y="149" width="149" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Delete Selection">
+                                    <color key="baseForegroundColor" systemColor="systemRedColor"/>
+                                    <color key="baseBackgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="pressDelete:" destination="Cjj-6w-MOk" eventType="touchUpInside" id="CYN-Ho-mDJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="b14-c0-dpn"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Manage Orders" image="list.bullet.rectangle.fill" catalog="system" id="2kZ-Jf-qdR"/>
                     <connections>
+                        <outlet property="btnDelete" destination="rAJ-6y-N3d" id="3xD-4B-n8B"/>
                         <outlet property="btnEditOrder" destination="z5S-Eg-SEq" id="12q-lz-3h7"/>
                         <outlet property="tableOrders" destination="HXu-Ue-8MA" id="7eX-wF-Eid"/>
                         <outlet property="textResponse" destination="tfL-TC-w7o" id="rLj-xG-kym"/>
@@ -174,9 +187,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="HZP-Zw-2OM" kind="presentation" identifier="DishUpdateForm" modalPresentationStyle="fullScreen" id="fVb-wH-5Iw"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -184,13 +194,6 @@
                                     <outlet property="delegate" destination="4HX-kr-Nby" id="tpU-lb-Pcp"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Select a dish to edit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9cU-dX-POK">
-                                <rect key="frame" x="16" y="149" width="172" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xHv-lT-YZw">
                                 <rect key="frame" x="16" y="592" width="142" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -201,6 +204,27 @@
                                     <segue destination="30b-dp-Ucx" kind="presentation" modalPresentationStyle="fullScreen" id="eK2-E7-mgV"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rE8-66-MGo">
+                                <rect key="frame" x="16" y="149" width="92" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Edit Dish"/>
+                                <connections>
+                                    <segue destination="HZP-Zw-2OM" kind="presentation" identifier="DishUpdateForm" modalPresentationStyle="fullScreen" id="uRI-F5-CZ7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S7n-7W-J9M">
+                                <rect key="frame" x="228" y="149" width="149" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Delete Selection">
+                                    <color key="baseForegroundColor" systemColor="systemRedColor"/>
+                                    <color key="baseBackgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="pressDelete:" destination="4HX-kr-Nby" eventType="touchUpInside" id="2FL-5n-FyN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="s9v-04-XIW"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -209,6 +233,8 @@
                     <navigationItem key="navigationItem" id="Gyr-JG-2tM"/>
                     <connections>
                         <outlet property="btnAddDishForm" destination="xHv-lT-YZw" id="XeI-nV-1vX"/>
+                        <outlet property="btnDelete" destination="S7n-7W-J9M" id="SMh-Yz-UtY"/>
+                        <outlet property="btnEditDish" destination="rE8-66-MGo" id="ARj-3f-SDK"/>
                         <outlet property="tableView" destination="m7p-6P-4WJ" id="s5Z-An-n4H"/>
                         <outlet property="textResponse" destination="dks-Bc-Cqe" id="FA6-tW-hcs"/>
                         <outlet property="textWelcome" destination="twU-Ca-WFl" id="qG3-Ge-RFj"/>

@@ -77,7 +77,6 @@ class DishUpdateViewController: UIViewController {
     
     @IBAction func btnUpdate(_ sender: Any) {
         updateDish()
-        dismiss(animated: true)
     }
     
     @IBAction func btnDelete(_ sender: Any) {
@@ -106,5 +105,9 @@ class DishUpdateViewController: UIViewController {
         
         // notify user of success/failure
         textResponse.text = results
+        
+        if results == "Update Successful" {
+            dismiss(animated: true)
+        }
     }
 }

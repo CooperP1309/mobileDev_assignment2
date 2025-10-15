@@ -21,6 +21,7 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     //  - buttons
     @IBOutlet weak var btnEditOrder: UIButton!
+    @IBOutlet weak var btnDelete: UIButton!
     
     //  - tableView related
     @IBOutlet weak var tableOrders: UITableView!
@@ -58,6 +59,7 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
     
         if tableOrders.indexPathsForSelectedRows == nil {
             btnEditOrder.isEnabled = false
+            btnDelete.isEnabled = false
             return
         }
    
@@ -68,6 +70,7 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
             return
         }
         
+        btnDelete.isEnabled = true
         btnEditOrder.isEnabled = true
     }
     
@@ -77,6 +80,7 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
             
         // by default, nothing is selected...
         btnEditOrder.isEnabled = false
+        btnDelete.isEnabled = false
         
         // allow cells to fit many lines
         tableOrders.rowHeight = UITableView.automaticDimension
@@ -96,6 +100,7 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
 
         // by default, nothing is selected...
         btnEditOrder.isEnabled = false
+        btnDelete.isEnabled = false
         
         // allow cells to fit many lines
         tableOrders.rowHeight = UITableView.automaticDimension
@@ -115,6 +120,20 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBAction func pressEditOrder(_ sender: Any) {
     }
 
+    @IBAction func pressDelete(_ sender: Any) {
+        
+        // get each selected orders
+        let selectedOrders = selectedRows.map { orders[$0.row] }
+        
+        // delete them orders
+        dao.deleteManyFromStrings(orders: selectedOrders)
+        
+        // refresh the data
+        orders = dao.retrieveAllOrders()
+        tableOrders.reloadData()
+        btnDelete.isEnabled = false
+    }
+    
     // prepare function packs data struct for use in next view segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
