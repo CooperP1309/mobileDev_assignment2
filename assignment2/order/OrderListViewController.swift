@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import CoreData
 
 class OrderListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // global vars/objecst
     var dao = OrderDAO()
+    var progDAO = OrderProgDAO()
     var selectedRows: [IndexPath] = []
     var targetOrder = OrderForm()
     
@@ -48,6 +50,7 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
     // handler for when a cell is selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         handleSelectedRows()
+        getOrderProgress(selectedIndex: indexPath)
     }
     
     // handler for when a cell is DEselected
@@ -74,10 +77,23 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
         btnEditOrder.isEnabled = true
     }
     
+    func getOrderProgress(selectedIndex: IndexPath) {
+        let order = orders[selectedIndex.row]
+        
+        // get ID of order
+        let orderForm = dao.stringToOrderForm(string: order)
+        
+        // use this ID to retrieve the process time from prog dao
+        let result = progDAO.getProcessTimeFromID(orderID: Int(orderForm.orderID)!)
+        
+        //print("\nOrderList:\n   Order: \(orderForm.orderID) \(result)")
+        textResponse.text = "Order \(orderForm.orderID): \(result)"
+    }
+    
     // ---- VIEW INITIALIZE FUNCTION ----
     override func viewDidLoad() {
         super.viewDidLoad()
-            
+        
         // by default, nothing is selected...
         btnEditOrder.isEnabled = false
         btnDelete.isEnabled = false

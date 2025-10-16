@@ -14,6 +14,9 @@
 		1E35B7852E9901F4001DB227 /* OrderDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E35B7842E9901F4001DB227 /* OrderDBManager.swift */; };
 		1E35B7872E99054C001DB227 /* OrderFinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E35B7862E99054C001DB227 /* OrderFinal.swift */; };
 		1E35B7892E990758001DB227 /* OrderForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E35B7882E990758001DB227 /* OrderForm.swift */; };
+		1E3759922EA0B8E3006FF1DB /* OrderProgressDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3759912EA0B8E3006FF1DB /* OrderProgressDBManager.swift */; };
+		1E3759942EA0B92B006FF1DB /* OrderProg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3759932EA0B92B006FF1DB /* OrderProg.swift */; };
+		1E3759962EA0BC6E006FF1DB /* OrderProgDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3759952EA0BC6E006FF1DB /* OrderProgDAO.swift */; };
 		1E37773D2E938AA700DFB375 /* DishUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E37773C2E938AA700DFB375 /* DishUpdateViewController.swift */; };
 		1E5126612E933DDD00EBB368 /* DishDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5126602E933DDD00EBB368 /* DishDAO.swift */; };
 		1E5126632E9340A200EBB368 /* Dish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5126622E9340A200EBB368 /* Dish.swift */; };
@@ -59,6 +62,9 @@
 		1E35B7842E9901F4001DB227 /* OrderDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDBManager.swift; sourceTree = "<group>"; };
 		1E35B7862E99054C001DB227 /* OrderFinal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderFinal.swift; sourceTree = "<group>"; };
 		1E35B7882E990758001DB227 /* OrderForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderForm.swift; sourceTree = "<group>"; };
+		1E3759912EA0B8E3006FF1DB /* OrderProgressDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderProgressDBManager.swift; sourceTree = "<group>"; };
+		1E3759932EA0B92B006FF1DB /* OrderProg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderProg.swift; sourceTree = "<group>"; };
+		1E3759952EA0BC6E006FF1DB /* OrderProgDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderProgDAO.swift; sourceTree = "<group>"; };
 		1E37773C2E938AA700DFB375 /* DishUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishUpdateViewController.swift; sourceTree = "<group>"; };
 		1E5126602E933DDD00EBB368 /* DishDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishDAO.swift; sourceTree = "<group>"; };
 		1E5126622E9340A200EBB368 /* Dish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dish.swift; sourceTree = "<group>"; };
@@ -111,6 +117,7 @@
 		1E35B77D2E98FBEB001DB227 /* order */ = {
 			isa = PBXGroup;
 			children = (
+				1E3759902EA0B8B5006FF1DB /* orderProgress */,
 				1E35B77E2E98FC02001DB227 /* OrderListViewController.swift */,
 				1E35B7802E98FCD7001DB227 /* OrderAddViewController.swift */,
 				1E35B7822E9901DB001DB227 /* OrderDAO.swift */,
@@ -120,6 +127,16 @@
 				1E33E8742E9A487A009493DE /* OrderUpdateViewController.swift */,
 			);
 			path = order;
+			sourceTree = "<group>";
+		};
+		1E3759902EA0B8B5006FF1DB /* orderProgress */ = {
+			isa = PBXGroup;
+			children = (
+				1E3759912EA0B8E3006FF1DB /* OrderProgressDBManager.swift */,
+				1E3759932EA0B92B006FF1DB /* OrderProg.swift */,
+				1E3759952EA0BC6E006FF1DB /* OrderProgDAO.swift */,
+			);
+			path = orderProgress;
 			sourceTree = "<group>";
 		};
 		1E95FBA92E91EC1800708109 = {
@@ -330,13 +347,16 @@
 				1E95FBB82E91EC1800708109 /* SceneDelegate.swift in Sources */,
 				1E95FBF62E91FCB300708109 /* DishListViewController.swift in Sources */,
 				1E33E8752E9A487A009493DE /* OrderUpdateViewController.swift in Sources */,
+				1E3759962EA0BC6E006FF1DB /* OrderProgDAO.swift in Sources */,
 				1E37773D2E938AA700DFB375 /* DishUpdateViewController.swift in Sources */,
 				1E92B3A32E926FFA00078CFF /* DishAddViewController.swift in Sources */,
 				1E95FBFA2E9201C100708109 /* DishDBManager.swift in Sources */,
+				1E3759942EA0B92B006FF1DB /* OrderProg.swift in Sources */,
 				1E35B77F2E98FC02001DB227 /* OrderListViewController.swift in Sources */,
 				1E5126612E933DDD00EBB368 /* DishDAO.swift in Sources */,
 				1E92B3A52E9279E700078CFF /* DishForm.swift in Sources */,
 				1E95FBC02E91EC1800708109 /* assignment2.xcdatamodeld in Sources */,
+				1E3759922EA0B8E3006FF1DB /* OrderProgressDBManager.swift in Sources */,
 				1E35B7812E98FCD7001DB227 /* OrderAddViewController.swift in Sources */,
 				1E95FBED2E91F1B400708109 /* HomeViewController.swift in Sources */,
 				1E35B7892E990758001DB227 /* OrderForm.swift in Sources */,

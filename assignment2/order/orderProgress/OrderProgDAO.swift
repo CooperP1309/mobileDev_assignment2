@@ -7,43 +7,58 @@
 
 import Foundation
 
-class OrderDAO {
+class OrderProgDAO {
     
     // declare db manager object
-    var db = OrderDBManager()
-    var progDAO = OrderProgDAO()
+    var db = OrderProgressDBManager()
     
-    // func pass Order Form data
-    func addOrderForm(orderForm: OrderForm) -> String {
+    // func pass Order ID to initialize a new progress tracker
+    func addOrderProg(orderID: Int16) {
         
-        // validate each property of dish struct
-        if !validateOrderForm(orderForm: orderForm).isEmpty {
-            print("\norder validation failed")
-            return validateOrderForm(orderForm: orderForm)
-        }
+        // generate a new order progress object
+        let order = OrderProg(orderID: orderID)
         
-        print("\nOrderDAO:\n  Adding order to db:\n" +
-              "id: " + orderForm.orderID + "\n" +
-              "tableNum: " + orderForm.tableNum + "\n" +
-              "Dining Type: " + orderForm.diningOpt + "\n" +
-              "Dishes: " + orderForm.dishes + "\n" +
-              "Price: " + orderForm.price)
+        // just loggin stuff
+        print("\nOrderProgDAO:\n    ORDER with ID: \(orderID) Created at: \(order.timeCreated)")
+
+        // actually push into database
+        let result = db.addRow(orderProg: order)
+        print("OrderProgDB: \(result)")
         
-        // extract each property and package in type appropriate struct
-        let order = OrderFinal(
-                orderID: Int16(orderForm.orderID)!,
-                tableNum: Int16(orderForm.tableNum)!,
-                diningOpt: orderForm.diningOpt,
-                dishes: orderForm.dishes,
-                price: Float(orderForm.price)!)
-        
-        // ensure synchronised order progress record is created
-        progDAO.addOrderProg(orderID: order.orderID)
-        let result = db.addRow(orderFinal: order)
-        
-        return result
+        return
     }
     
+    func getProcessTimeFromID(orderID: Int) -> String {
+        
+        // search by ID the database
+        let orderProg = db.retrieveById(theId: Int16(orderID))
+        if orderProg.orderID == 0 {
+            return "Error"
+        }
+        
+        // determine if to show time since created or completed time
+        var processTime: String = ""
+        if !orderProg.isDone {
+            
+            // convert stored time created into a date object
+            let isoFormatter = ISO8601DateFormatter()
+            let date = isoFormatter.date(from: orderProg.timeCreated)!
+            
+            // get the difference since now
+            let secondsElapsed = -date.timeIntervalSinceNow
+            let minutes = Int(secondsElapsed) / 60
+            let remainingSeconds = Int(secondsElapsed) % 60
+            processTime = "Cooking for \(minutes) minutes and \(remainingSeconds) secs"
+        }
+        else {
+            processTime = "Completed in "
+            processTime.append(String(orderProg.timeCreated))
+        }
+     
+        return processTime
+    }
+    
+    /*
     func updateOrderForm(orderForm: OrderForm) -> String {
         
         // validate each property of dish struct
@@ -82,7 +97,7 @@ class OrderDAO {
     
     func validateOrderForm(orderForm: OrderForm)->String {
         
-        //print("\nValidating order...")
+        print("\nValidating order...")
         
         // validate id
         if orderForm.orderID.isEmpty{
@@ -244,7 +259,7 @@ class OrderDAO {
         let diningOpt = extractedDiningOpt.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if diningOpt == "Take Away" {
-            //print("DETECTED TAKEAWAY FROM: " + order)
+            print("DETECTED TAKEAWAY FROM: " + order)
             return true
         }
         
@@ -277,7 +292,7 @@ class OrderDAO {
             startIndex2 = order.index(after: startIndex2)
         }
         
-        //print("PRODUCE RECORD:\n" + tableNumBuffer)
+        print("PRODUCE RECORD:\n" + tableNumBuffer)
         
         return tableNumBuffer
     }
@@ -306,11 +321,11 @@ class OrderDAO {
         var properties = string.components(separatedBy:",")
         
         // usual logging
-        /*print("Converting String: " + string + "\n" )
+        print("Converting String: " + string + "\n" )
         print("Resulting order properties:\n")
         properties.forEach{ order in
             print(order)
-        }*/
+        }
 
         // remove whitespaces
         properties = properties.map {$0.trimmingCharacters(in: .whitespaces)}
@@ -324,4 +339,5 @@ class OrderDAO {
             
         return order
     }
+     */
 }
