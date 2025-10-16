@@ -18,12 +18,12 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // declaring of UI objects
     //  - text
-    
     @IBOutlet weak var textResponse: UILabel!
     
     //  - buttons
     @IBOutlet weak var btnEditOrder: UIButton!
     @IBOutlet weak var btnDelete: UIButton!
+    @IBOutlet weak var btnMarkDone: UIButton!
     
     //  - tableView related
     @IBOutlet weak var tableOrders: UITableView!
@@ -150,6 +150,26 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
         btnDelete.isEnabled = false
     }
     
+    @IBAction func pressMarkDone(_ sender: Any) {
+        markOrderAsDone()
+    }
+    
+    func markOrderAsDone() {
+        
+        // for each row
+        for currentOrder in selectedRows {
+            
+            // extract the given row ID
+            let orderStr = orders[currentOrder.row]
+            let order = dao.stringToOrderForm(string: orderStr)
+            let id = Int(order.orderID)
+            
+            // update the OrderProg record
+            let result = progDAO.markAsDone(orderID: id!)
+            print("\nProgDAO:\n   \(result)")
+        }
+    }
+    
     // prepare function packs data struct for use in next view segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
@@ -176,6 +196,6 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
         destination.order = dao.stringToOrderForm(string: selectedOrder[0])
     
         // testing it was populated
-        print("Dest Order Dishes: " + destination.order.dishes)
+        //print("Dest Order Dishes: " + destination.order.dishes)
     }
 }

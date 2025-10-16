@@ -109,6 +109,13 @@
                                     <segue destination="9aS-IG-KCz" kind="presentation" identifier="OrderUpdateForm" modalPresentationStyle="fullScreen" id="D7p-62-MSb"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tfL-TC-w7o">
+                                <rect key="frame" x="16" y="631" width="361" height="138"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rAJ-6y-N3d">
                                 <rect key="frame" x="228" y="149" width="149" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -121,13 +128,17 @@
                                     <action selector="pressDelete:" destination="Cjj-6w-MOk" eventType="touchUpInside" id="CYN-Ho-mDJ"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tfL-TC-w7o">
-                                <rect key="frame" x="16" y="631" width="361" height="138"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f3q-fi-q3p">
+                                <rect key="frame" x="246" y="592" width="131" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Mark As Done">
+                                    <color key="baseBackgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="pressMarkDone:" destination="Cjj-6w-MOk" eventType="touchUpInside" id="5by-Do-XDa"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="b14-c0-dpn"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -136,6 +147,7 @@
                     <connections>
                         <outlet property="btnDelete" destination="rAJ-6y-N3d" id="3xD-4B-n8B"/>
                         <outlet property="btnEditOrder" destination="z5S-Eg-SEq" id="12q-lz-3h7"/>
+                        <outlet property="btnMarkDone" destination="f3q-fi-q3p" id="of6-Ne-uef"/>
                         <outlet property="tableOrders" destination="HXu-Ue-8MA" id="7eX-wF-Eid"/>
                         <outlet property="textResponse" destination="tfL-TC-w7o" id="rLj-xG-kym"/>
                     </connections>

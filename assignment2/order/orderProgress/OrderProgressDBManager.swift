@@ -79,6 +79,49 @@ class OrderProgressDBManager: NSObject {
         return orderProg
     }
     
+    func updateRow(orderProg: OrderProg)-> String{
+        
+        // set the core data to access the dish Entity and declare a context
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+        return "AppDelegate error" } //use this in every function for DB
+        let managedContext = appDelegate.persistentContainer.viewContext
+        //use this in every function for DB
+        
+         // actual fetching of data
+         let fetchRequest: NSFetchRequest<OrderProgress> = OrderProgress.fetchRequest()
+         
+         // Make a predicate asking only for sessions of a certain "projectId"
+        let query = NSPredicate(format: "orderID == %d", orderProg.orderID)
+         fetchRequest.predicate = query
+         fetchRequest.fetchLimit = 1 // Limit to one result as we're expecting a single object
+      
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            
+            // if a dish is found
+            if let targetOrder = results.first {
+                
+                // updating of fetched dishes fields
+                targetOrder.setValue(orderProg.orderID, forKey: "orderID")
+                targetOrder.setValue(orderProg.isDone, forKey: "isDone")
+                targetOrder.setValue(orderProg.timeCompleted, forKey: "timeCompleted")
+                targetOrder.setValue(orderProg.timeCreated, forKey: "timeCreated")
+                
+                // make sure to save changes in storage (not just memory)
+                try managedContext.save()
+            }
+            else {
+                return "No Record Found"
+            }
+            
+        } catch let error as NSError {
+            print ("Failed to fetch for update: \(error), \(error.userInfo)")
+            return "Update Failed"
+        }
+        
+        return "Update Successful"
+    }
+    
     /*
     func retrieveAllRows() -> String{
         var records = "" //for returning records
@@ -113,7 +156,7 @@ class OrderProgressDBManager: NSObject {
 
     
     
-    func updateRow(orderFinal: OrderFinal)-> String{
+    func updateRow(orderProg: orderProg)-> String{
         
         // set the core data to access the dish Entity and declare a context
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -125,7 +168,7 @@ class OrderProgressDBManager: NSObject {
          let fetchRequest: NSFetchRequest<Order> = Order.fetchRequest()
          
          // Make a predicate asking only for sessions of a certain "projectId"
-        let query = NSPredicate(format: "orderID == %d", orderFinal.orderID)
+        let query = NSPredicate(format: "orderID == %d", orderProg.orderID)
          fetchRequest.predicate = query
          fetchRequest.fetchLimit = 1 // Limit to one result as we're expecting a single object
       
@@ -136,11 +179,11 @@ class OrderProgressDBManager: NSObject {
             if let targetOrder = results.first {
                 
                 // updating of fetched dishes fields
-                targetOrder.setValue(orderFinal.orderID, forKey: "orderID")
-                targetOrder.setValue(orderFinal.tableNum, forKey: "tableNumber")
-                targetOrder.setValue(orderFinal.diningOpt, forKey: "diningOption")
-                targetOrder.setValue(orderFinal.dishes, forKey: "dishes")
-                targetOrder.setValue(orderFinal.price, forKey: "price")
+                targetOrder.setValue(orderProg.orderID, forKey: "orderID")
+                targetOrder.setValue(orderProg.tableNum, forKey: "tableNumber")
+                targetOrder.setValue(orderProg.diningOpt, forKey: "diningOption")
+                targetOrder.setValue(orderProg.dishes, forKey: "dishes")
+                targetOrder.setValue(orderProg.price, forKey: "price")
                 
                 // make sure to save changes in storage (not just memory)
                 try managedContext.save()

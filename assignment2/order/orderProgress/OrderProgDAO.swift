@@ -37,7 +37,7 @@ class OrderProgDAO {
         }
         
         // determine if to show time since created or completed time
-        var processTime: String = ""
+        var processTime = ""
         if !orderProg.isDone {
             
             // convert stored time created into a date object
@@ -52,10 +52,32 @@ class OrderProgDAO {
         }
         else {
             processTime = "Completed in "
-            processTime.append(String(orderProg.timeCreated))
+            processTime.append(String(orderProg.timeCompleted))
         }
      
         return processTime
+    }
+    
+    func markAsDone(orderID: Int) -> String {
+        
+        // get the current OrderProg record (given the ID)
+        var orderProg = db.retrieveById(theId: Int16(orderID))
+        
+        // set completion time (and mark boolean field as done)
+        let isoFormatter = ISO8601DateFormatter()
+        let date = isoFormatter.date(from: orderProg.timeCreated)!      // initialize new Date obj using time created
+        
+        // get the difference since now
+        let secondsElapsed = -date.timeIntervalSinceNow
+        let minutes = Int(secondsElapsed) / 60
+        let remainingSeconds = Int(secondsElapsed) % 60
+        orderProg.timeCompleted = "\(minutes) minutes and \(remainingSeconds) secs"
+        orderProg.isDone = true
+        
+        // update in the db
+        let result = db.updateRow(orderProg: orderProg)
+        
+        return "\(result): Order \(orderProg.orderID) is done = \(orderProg.isDone) "
     }
     
     /*
