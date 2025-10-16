@@ -31,6 +31,8 @@ class OrderProgDAO {
     func getProcessTimeFromID(orderID: Int) -> String {
         
         // search by ID the database
+        print("\nProgDAO:\n retrieving from id: \(orderID)")
+        
         let orderProg = db.retrieveById(theId: Int16(orderID))
         if orderProg.orderID == 0 {
             return "Error"
@@ -78,6 +80,68 @@ class OrderProgDAO {
         let result = db.updateRow(orderProg: orderProg)
         
         return "\(result): Order \(orderProg.orderID) is done = \(orderProg.isDone) "
+    }
+    
+    func isOrderDone(orderStr:String)-> Bool {
+        
+        // get the id of the order
+        let orderID = self.getOrderID(orderStr: orderStr)
+        
+        // get the progress time
+        let progressTime = self.getProcessTimeFromID(orderID: orderID)
+        
+        // if done, well... you know
+        if progressTime.contains("Completed") {
+            return true
+        }
+        
+        return false
+    }
+
+    func getOrderID(orderStr: String) -> Int {
+        
+        // get position of the first comma
+        let endIndex = self.getIndexOfNthComma(order: orderStr, n: 1)
+        var index = orderStr.startIndex
+        var idStr = ""
+        
+        // loop through, picking up the ID as you go
+        while index < endIndex {
+            idStr.append(orderStr[index])
+            index = orderStr.index(after: index)
+        }
+        
+        // some light processing
+        idStr = idStr.replacingOccurrences(of: ",", with: "")
+        idStr = idStr.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        print("\nProgDAO:\n Id: \(idStr) from: \(orderStr)")
+        
+        return Int(idStr)!
+    }
+    
+    func getIndexOfNthComma(order: String, n: Int) -> String.Index {
+        
+        var count = 0, currentIndex = order.startIndex
+        
+        while currentIndex < order.endIndex {
+            if order[currentIndex] == "," {
+                count += 1
+            }
+            
+            // remember to increment before possible break as not to include comma itself
+            currentIndex = order.index(after: currentIndex)
+            if count == n { // end loop once the desired occurence is met
+                break
+            }
+        }
+        
+        return currentIndex
+    }
+    
+    func deleteById(id: Int16) {
+        let result = db.deleteRowById(id: id)
+        print("\nProgDAO:\n \(result)")
     }
     
     /*

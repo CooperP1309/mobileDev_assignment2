@@ -75,6 +75,8 @@ class OrderDAO {
     
     func deleteOrder(id: String) -> String {
         
+        // ensure progress record is deleted too
+        progDAO.deleteById(id: Int16(id)!)
         let result = db.deleteRowById(id: Int16(id)!)
         
         return result
@@ -324,4 +326,27 @@ class OrderDAO {
             
         return order
     }
+    
+    func getOrderID(orderStr: String) -> Int {
+        
+        // get position of the first comma
+        let endIndex = self.getIndexOfNthComma(order: orderStr, n: 1)
+        var index = orderStr.startIndex
+        var idStr = ""
+        
+        // loop through, picking up the ID as you go
+        while index < endIndex {
+            idStr.append(orderStr[index])
+            index = orderStr.index(after: index)
+        }
+        
+        // some light processing
+        idStr = idStr.replacingOccurrences(of: ",", with: "")
+        idStr = idStr.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        print("Id: \(idStr) from: \(orderStr)")
+        
+        return Int(idStr)!
+    }
+   
 }

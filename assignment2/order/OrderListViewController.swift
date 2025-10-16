@@ -15,6 +15,7 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
     var progDAO = OrderProgDAO()
     var selectedRows: [IndexPath] = []
     var targetOrder = OrderForm()
+    var completedOrders: Set<String> = []
     
     // declaring of UI objects
     //  - text
@@ -43,6 +44,13 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.textLabel?.numberOfLines = 0
         cell.textLabel?.lineBreakMode = .byWordWrapping
         cell.textLabel!.text = orders[indexPath.row]
+        //cell.detailTextLabel!.text = "Done"
+        if completedOrders.contains(orders[indexPath.row]) {
+            cell.detailTextLabel!.text = "Done"
+        }
+        else {
+            cell.detailTextLabel!.text = ""
+        }
         
         return cell
     }
@@ -106,7 +114,11 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
         // on startup, load the dishes db via retrieve()
         orders = dao.retrieveAllOrders()
         orders.forEach{ order in
-            print(order)
+            
+            // ensure the push of newly completed orders
+            if progDAO.isOrderDone(orderStr: order) {
+                completedOrders.insert(order)
+            }
         }
     }
     
@@ -126,7 +138,11 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
         // on startup, load the dishes db via retrieve()
         orders = dao.retrieveAllOrders()
         orders.forEach{ order in
-            print(order)
+            
+            // ensure the push of newly completed orders
+            if progDAO.isOrderDone(orderStr: order) {
+                completedOrders.insert(order)
+            }
         }
         tableOrders.reloadData()
     }
@@ -146,12 +162,30 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
         
         // refresh the data
         orders = dao.retrieveAllOrders()
+        orders.forEach{ order in
+            
+            // ensure the push of newly completed orders
+            if progDAO.isOrderDone(orderStr: order) {
+                completedOrders.insert(order)
+            }
+        }
         tableOrders.reloadData()
         btnDelete.isEnabled = false
     }
     
     @IBAction func pressMarkDone(_ sender: Any) {
         markOrderAsDone()
+        
+        // refresh the data
+        orders = dao.retrieveAllOrders()
+        orders.forEach{ order in
+            
+            // ensure the push of newly completed orders
+            if progDAO.isOrderDone(orderStr: order) {
+                completedOrders.insert(order)
+            }
+        }
+        tableOrders.reloadData()
     }
     
     func markOrderAsDone() {

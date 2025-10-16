@@ -122,6 +122,46 @@ class OrderProgressDBManager: NSObject {
         return "Update Successful"
     }
     
+    func deleteRowById(id: Int16)-> String{
+        
+        // set the core data to access the dish Entity and declare a context
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+        return "AppDelegate error" } //use this in every function for DB
+        let managedContext = appDelegate.persistentContainer.viewContext
+        //use this in every function for DB
+        
+         // actual fetching of data
+         let fetchRequest: NSFetchRequest<OrderProgress> = OrderProgress.fetchRequest()
+         //fetchRequest.predicate(format: "%K == %@", "id", id as CVarArg)
+         
+         // Make a predicate asking only for sessions of a certain "projectId"
+        let query = NSPredicate(format: "orderID == %d", id)
+         fetchRequest.predicate = query
+         fetchRequest.fetchLimit = 1 // Limit to one result as we're expecting a single object
+      
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            
+            // if a dish is found
+            if let targetOrder = results.first {
+                
+                managedContext.delete(targetOrder)
+                
+                // make sure to save changes in storage (not just memory)
+                try managedContext.save()
+            }
+            else {
+                return "No Record Found"
+            }
+            
+        } catch let error as NSError {
+            print ("Failed to fetch for update: \(error), \(error.userInfo)")
+            return "Update Failed"
+        }
+        
+        return "Delete Successful"
+    }
+    
     /*
     func retrieveAllRows() -> String{
         var records = "" //for returning records
