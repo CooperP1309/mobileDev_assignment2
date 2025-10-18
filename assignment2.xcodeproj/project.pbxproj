@@ -20,6 +20,7 @@
 		1E37773D2E938AA700DFB375 /* DishUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E37773C2E938AA700DFB375 /* DishUpdateViewController.swift */; };
 		1E5126612E933DDD00EBB368 /* DishDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5126602E933DDD00EBB368 /* DishDAO.swift */; };
 		1E5126632E9340A200EBB368 /* Dish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5126622E9340A200EBB368 /* Dish.swift */; };
+		1E66AE412EA226F1000B6ABF /* ImageDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E66AE402EA226F1000B6ABF /* ImageDAO.swift */; };
 		1E92B3A32E926FFA00078CFF /* DishAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E92B3A22E926FFA00078CFF /* DishAddViewController.swift */; };
 		1E92B3A52E9279E700078CFF /* DishForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E92B3A42E9279E700078CFF /* DishForm.swift */; };
 		1E95FBB62E91EC1800708109 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E95FBB52E91EC1800708109 /* AppDelegate.swift */; };
@@ -68,6 +69,7 @@
 		1E37773C2E938AA700DFB375 /* DishUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishUpdateViewController.swift; sourceTree = "<group>"; };
 		1E5126602E933DDD00EBB368 /* DishDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishDAO.swift; sourceTree = "<group>"; };
 		1E5126622E9340A200EBB368 /* Dish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dish.swift; sourceTree = "<group>"; };
+		1E66AE402EA226F1000B6ABF /* ImageDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDAO.swift; sourceTree = "<group>"; };
 		1E92B3A22E926FFA00078CFF /* DishAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishAddViewController.swift; sourceTree = "<group>"; };
 		1E92B3A42E9279E700078CFF /* DishForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishForm.swift; sourceTree = "<group>"; };
 		1E95FBB22E91EC1800708109 /* assignment2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = assignment2.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -204,6 +206,7 @@
 				1E5126602E933DDD00EBB368 /* DishDAO.swift */,
 				1E5126622E9340A200EBB368 /* Dish.swift */,
 				1E37773C2E938AA700DFB375 /* DishUpdateViewController.swift */,
+				1E66AE402EA226F1000B6ABF /* ImageDAO.swift */,
 			);
 			path = dish;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E66AE412EA226F1000B6ABF /* ImageDAO.swift in Sources */,
 				1E95FBB62E91EC1800708109 /* AppDelegate.swift in Sources */,
 				1E35B7872E99054C001DB227 /* OrderFinal.swift in Sources */,
 				1E35B7852E9901F4001DB227 /* OrderDBManager.swift in Sources */,

@@ -100,7 +100,7 @@ class DishDBManager: NSObject {
                 let price = trans.price
                 let image = trans.image
                 //add info to returning records
-                record = record + "\(id), \(name!), \(type!), \(ingredients!), \(price)  \(image!)\n"
+                record = record + "\(id), \(name!), \(type!), \(ingredients!), \(price), \(image!)\n"
             }
         }
         catch let error as NSError{

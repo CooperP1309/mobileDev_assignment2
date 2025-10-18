@@ -69,9 +69,40 @@ class DishDAO {
     
     func deleteDish(id: String) -> String {
         
+        // first delete image from app storage (if it has one)
+        deleteImageFromID(id: id)
         let result = db.deleteRowById(id: Int16(id)!)
         
         return result
+    }
+    
+    func deleteImageFromID(id: String) {
+        
+        // get the dish string from DishDB
+        let intID = Int(id)
+        let dish = db.retrieveById(theId: Int16(intID!))
+        
+        // get the image name from the dish string
+        let imageName = self.getImageFromDishStr(dishStr: dish)
+        if imageName.isEmpty {
+            return          // abort if no image exists already
+        }
+        
+        // declare a filemanager for this operation
+        let filemanager = FileManager.default
+        
+        // build file path using the image name
+        let docsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let filePath = docsPath.appendingPathComponent(imageName)
+        
+        do {
+            try filemanager.removeItem(at: filePath)
+            print("\nDishDAO:\n  Previous image successfully removed from files:\n   \(filePath)")
+        } catch {
+            print("\nDishDAO:\n  Failed to delete previous image:\n   \(filePath)")
+        }
+        
+        return
     }
     
     func getPriceFromSelected(dishArray: [String]) -> Float {
@@ -289,7 +320,7 @@ class DishDAO {
     
     func sortIngredients(ingredients: String) -> String{
         
-        let newIngredients = ingredients.replacingOccurrences(of: ",", with: "|")
+        let newIngredients = ingredients.replacingOccurrences(of: ",", with: " |")
         
         return newIngredients
     }
@@ -371,5 +402,62 @@ class DishDAO {
         }
         
         return dishNameArray
+    }
+    
+    func getImageFromDishStr(dishStr: String) -> String {
+        
+        // get the 5th comma occurence (start of image field)
+        var index = self.getIndexOfNthComma(dish: dishStr, n: 5)
+        let lastIndex = dishStr.endIndex
+        
+        // case where no image is present
+        if index == lastIndex {
+            //print("\nDishDAO:\n NO IMAGE FROM: \(dishStr)")
+            return ""
+        }
+        
+        var imageStr = ""
+        while index < lastIndex {
+            imageStr.append(dishStr[index])
+            
+            // ALWAYS INCREMENT!!
+            index = dishStr.index(after: index)
+        }
+        //print("\nDishDAO:\n GOT IMAGE NAME FROM: \(dishStr)\n   \(imageStr)")
+        
+        // last minute processing
+        imageStr = imageStr.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        return imageStr
+    }
+    
+    func stripImageFromDishStr(dishStr: String) -> String {
+        
+        // get the 5th comma occurence (start of image field)
+        var newDish = dishStr
+        let index = self.getIndexOfNthComma(dish: newDish, n: 5)
+        var lastIndex = newDish.endIndex
+        
+        // case where no image is present
+        if index == lastIndex {
+            
+            if newDish.last == "," {
+                newDish.removeLast()
+            }
+            
+            return newDish
+        }
+        
+        while lastIndex > index {
+            newDish.removeLast()
+            
+            // REMEMBER TO DECREMENT
+            lastIndex = newDish.endIndex
+        }
+        
+        // one last removal for the comma itself
+        newDish.removeLast()
+        
+        return newDish
     }
 }

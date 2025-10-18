@@ -324,7 +324,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2DK-7P-0ch">
-                                <rect key="frame" x="21" y="643" width="118" height="35"/>
+                                <rect key="frame" x="33" y="718" width="118" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Update Dish"/>
@@ -367,15 +367,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rkl-EZ-1JZ">
-                                <rect key="frame" x="202" y="585" width="47" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Yw-GK-NyO">
-                                <rect key="frame" x="171" y="643" width="175" height="110"/>
+                                <rect key="frame" x="169" y="686" width="177" height="106"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" systemColor="systemRedColor"/>
@@ -400,6 +393,26 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aLg-b0-UZb">
+                                <rect key="frame" x="26" y="565" width="132" height="102"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cy8-zl-tvX">
+                                <rect key="frame" x="178" y="564" width="123" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Select Image"/>
+                                <connections>
+                                    <action selector="pressSelectImage:" destination="HZP-Zw-2OM" eventType="touchUpInside" id="MdQ-xT-7H5"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="*Optional" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rkl-EZ-1JZ">
+                                <rect key="frame" x="202" y="605" width="72" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="w5b-ei-7HY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -407,9 +420,11 @@
                     <connections>
                         <outlet property="btnDelete" destination="1G9-uJ-719" id="phs-xE-Khq"/>
                         <outlet property="btnReturn" destination="sRv-AZ-zfY" id="GWG-ut-lCZ"/>
+                        <outlet property="btnSelectImage" destination="Cy8-zl-tvX" id="t0Z-L0-WqO"/>
                         <outlet property="editDishName" destination="9Jh-nv-yd8" id="tJ3-Yl-N6Z"/>
                         <outlet property="editIngredients" destination="L0n-FU-Yfw" id="zhp-eu-ufH"/>
                         <outlet property="editPrice" destination="eID-cE-ZOD" id="SVo-RL-6g0"/>
+                        <outlet property="imageDish" destination="aLg-b0-UZb" id="PoQ-bO-AGY"/>
                         <outlet property="segDishType" destination="KMs-FE-xWp" id="07a-XH-Tag"/>
                         <outlet property="textDishId" destination="Bbu-A6-L3g" id="QuL-ww-7BJ"/>
                         <outlet property="textResponse" destination="9Yw-GK-NyO" id="6Ed-zk-hXB"/>
@@ -796,7 +811,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xfi-hc-nDg">
-                                <rect key="frame" x="33" y="643" width="93" height="35"/>
+                                <rect key="frame" x="33" y="680" width="93" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Add Dish"/>
@@ -805,7 +820,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZVd-os-GOp">
-                                <rect key="frame" x="181" y="630" width="177" height="134"/>
+                                <rect key="frame" x="175" y="660" width="177" height="134"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <color key="textColor" systemColor="systemRedColor"/>
@@ -846,13 +861,26 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32x-cN-QSs">
-                                <rect key="frame" x="202" y="585" width="47" height="21"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4pd-0s-HX5">
+                                <rect key="frame" x="202" y="570" width="123" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Select Image"/>
+                                <connections>
+                                    <action selector="pressSelectImage:" destination="30b-dp-Ucx" eventType="touchUpInside" id="Uqr-1T-P4d"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="*Optional" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IwC-Ko-4ve">
+                                <rect key="frame" x="202" y="613" width="72" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="365-6G-JUO">
+                                <rect key="frame" x="23" y="570" width="117" height="92"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="u3U-77-6aE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -862,10 +890,12 @@
                     <connections>
                         <outlet property="btnAddDish" destination="Xfi-hc-nDg" id="6bj-Rx-kJX"/>
                         <outlet property="btnReturn" destination="Xfi-hc-nDg" id="An5-9R-aZd"/>
+                        <outlet property="btnSelectImage" destination="4pd-0s-HX5" id="uBO-yw-Xuk"/>
                         <outlet property="editDishId" destination="N7P-fx-kkm" id="kIP-Yp-Kqg"/>
                         <outlet property="editDishName" destination="Jj3-Nd-Vh9" id="RsN-xu-TMV"/>
                         <outlet property="editIngredients" destination="Qm1-A6-QCh" id="3Wu-eu-k7U"/>
                         <outlet property="editPrice" destination="LIa-fD-Xyk" id="Xg4-Qj-zMa"/>
+                        <outlet property="imageDish" destination="365-6G-JUO" id="NvI-rL-Zau"/>
                         <outlet property="segDishType" destination="jx6-3p-35h" id="yfI-KZ-5AB"/>
                         <outlet property="textResponse" destination="ZVd-os-GOp" id="1O7-in-m5R"/>
                     </connections>

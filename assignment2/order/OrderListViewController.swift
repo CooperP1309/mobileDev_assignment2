@@ -71,6 +71,7 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
         if tableOrders.indexPathsForSelectedRows == nil {
             btnEditOrder.isEnabled = false
             btnDelete.isEnabled = false
+            btnMarkDone.isEnabled = false
             return
         }
    
@@ -83,6 +84,7 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
         
         btnDelete.isEnabled = true
         btnEditOrder.isEnabled = true
+        btnMarkDone.isEnabled = true
     }
     
     func getOrderProgress(selectedIndex: IndexPath) {
@@ -186,6 +188,9 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
             }
         }
         tableOrders.reloadData()
+        
+        // update the progress
+        getOrderProgress(selectedIndex: selectedRows.last!)
     }
     
     func markOrderAsDone() {
