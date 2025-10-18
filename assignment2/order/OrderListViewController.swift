@@ -107,6 +107,7 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
         // by default, nothing is selected...
         btnEditOrder.isEnabled = false
         btnDelete.isEnabled = false
+        btnMarkDone.isEnabled = false
         
         // allow cells to fit many lines
         tableOrders.rowHeight = UITableView.automaticDimension
@@ -131,6 +132,7 @@ class OrderListViewController: UIViewController, UITableViewDelegate, UITableVie
         // by default, nothing is selected...
         btnEditOrder.isEnabled = false
         btnDelete.isEnabled = false
+        btnMarkDone.isEnabled = false
         
         // allow cells to fit many lines
         tableOrders.rowHeight = UITableView.automaticDimension

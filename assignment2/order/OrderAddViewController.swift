@@ -13,6 +13,9 @@ class OrderAddViewController: UIViewController, UITableViewDelegate, UITableView
     var daoOrder = OrderDAO()
     var daoDish = DishDAO()
     
+    // declare a pointer to where images are saved
+    let docsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    
     // ---- declaring of UI objects ----
     //  - buttons
     @IBOutlet weak var btnReturn: UIButton!
@@ -41,7 +44,8 @@ class OrderAddViewController: UIViewController, UITableViewDelegate, UITableView
     
     // initializing of tableview cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        /*
+         // OLD IMPLEMENTATION
         // setting text from units array via indexing
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell0", for: indexPath)
         
@@ -60,6 +64,44 @@ class OrderAddViewController: UIViewController, UITableViewDelegate, UITableView
             cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
         }
 
+        return cell;
+        */
+        
+        // setting text from units array via indexing
+        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell0",
+        for: indexPath)
+        
+        // setting row params and loading dish data
+        cell.textLabel?.numberOfLines = 0
+        cell.textLabel?.lineBreakMode = .byWordWrapping
+        
+        // set as the record without its image name
+        cell.textLabel!.text = daoDish.stripImageFromDishStr(dishStr: dishes[indexPath.row])
+        
+        // disable interactivity for header cells and configure header text properties
+        if dishes[indexPath.row] == "Drink" || dishes[indexPath.row] == "Entree" || dishes[indexPath.row] == "Main" {
+            cell.isUserInteractionEnabled = false
+            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+            
+            // ensure the image slot is cleared
+            cell.imageView?.image = nil
+            cell.accessoryView = nil
+        }
+        else {
+            cell.isUserInteractionEnabled = true
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
+                
+            // only try to load an image if it's a valid dish
+            // loading of image
+            cell.imageView?.image = loadImage(dish: dishes[indexPath.row])
+            
+            // setting attributes of image view
+            cell.imageView?.contentMode = .scaleAspectFill
+            cell.imageView?.layer.cornerRadius = 6
+            cell.imageView?.clipsToBounds = true
+            cell.imageView?.frame.size = CGSize(width: 60, height: 60)
+        }
+        
         return cell;
     }
     
@@ -179,5 +221,30 @@ class OrderAddViewController: UIViewController, UITableViewDelegate, UITableView
 
     func getDiningOpt() -> String {
         return segDiningOpt.titleForSegment(at: segDiningOpt.selectedSegmentIndex)!
+    }
+    
+    func loadImage(dish: String) -> UIImage? {
+        
+        // we get the image name from record (via DAO)
+        let fileName = daoDish.getImageFromDishStr(dishStr: dish)
+        
+        // check for empty imageName
+        if fileName.isEmpty {
+            return nil
+        }
+
+        // get the image from storage using image name
+        let filePath = docsPath.appendingPathComponent(fileName)
+        let image = UIImage(contentsOfFile: filePath.path)
+        
+        // return the image at a thumbnail size
+        return imageThumbnail(from: image!, size: CGSize(width: 60, height: 60))
+    }
+    
+    func imageThumbnail(from image: UIImage, size: CGSize) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { _ in
+            image.draw(in: CGRect(origin: .zero, size: size))
+        }
     }
 }

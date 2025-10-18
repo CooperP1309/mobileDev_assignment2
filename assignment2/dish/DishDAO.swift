@@ -379,9 +379,8 @@ class DishDAO {
         while index < dishArray.count {
             var currentDish = db.retrieveByName(theName: dishArray[index])
             
-            // white line and missing comma processing
+            // white line processing
             currentDish = currentDish.trimmingCharacters(in: .whitespacesAndNewlines)
-            currentDish.append(",")
             
             // finally storing and incrementing
             dishArray[index] = currentDish
@@ -400,7 +399,12 @@ class DishDAO {
             dishNameArray[index] = dishNameArray[index].trimmingCharacters(in: .whitespacesAndNewlines)
             index += 1
         }
-        
+        /*
+        print("\nDishDAO:\n Separated dish names into array:")
+        for dish in dishNameArray {
+            print(dish)
+        }
+        */
         return dishNameArray
     }
     
