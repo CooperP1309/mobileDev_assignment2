@@ -38,6 +38,21 @@ class DishListViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // check access level
+        if Session.accessLevel != 1 {
+            print("\nManageDish:\n    Session level: \(Session.accessLevel) User: \(Session.username)")
+            view.subviews.forEach { $0.isHidden = true }
+            textResponse.isHidden = false
+            textResponse.font = UIFont.systemFont(ofSize: 24)
+            textResponse.text = "Please sign in as an administrator"
+            return
+        }
+        else {
+            view.subviews.forEach { $0.isHidden = false }
+            textResponse.text = ""
+        }
+        //textResponse.text = "Access Level: \(Session.accessLevel)"
+        
         // by default, nothing is selected...
         btnDelete.isEnabled = false
         btnEditDish.isEnabled = false
@@ -58,6 +73,20 @@ class DishListViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        // check access level
+        if Session.accessLevel != 1 {
+            print("\nManageDish:\n    Session level: \(Session.accessLevel) User: \(Session.username)")
+            view.subviews.forEach { $0.isHidden = true }
+            textResponse.isHidden = false
+            textResponse.font = UIFont.systemFont(ofSize: 24)
+            textResponse.text = "Please sign in as an administrator"
+            return
+        }
+        else {
+            view.subviews.forEach { $0.isHidden = false }
+            textResponse.text = ""
+        }
+        
         // by default, nothing is selected...
         btnDelete.isEnabled = false
         btnEditDish.isEnabled = false

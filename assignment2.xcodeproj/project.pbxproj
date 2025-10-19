@@ -20,6 +20,8 @@
 		1E37773D2E938AA700DFB375 /* DishUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E37773C2E938AA700DFB375 /* DishUpdateViewController.swift */; };
 		1E5126612E933DDD00EBB368 /* DishDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5126602E933DDD00EBB368 /* DishDAO.swift */; };
 		1E5126632E9340A200EBB368 /* Dish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5126622E9340A200EBB368 /* Dish.swift */; };
+		1E5298AB2EA455BE00E3C027 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5298AA2EA455BE00E3C027 /* LoginViewController.swift */; };
+		1E5298AD2EA4716500E3C027 /* SessionLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5298AC2EA4716500E3C027 /* SessionLogin.swift */; };
 		1E66AE412EA226F1000B6ABF /* ImageDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E66AE402EA226F1000B6ABF /* ImageDAO.swift */; };
 		1E92B3A32E926FFA00078CFF /* DishAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E92B3A22E926FFA00078CFF /* DishAddViewController.swift */; };
 		1E92B3A52E9279E700078CFF /* DishForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E92B3A42E9279E700078CFF /* DishForm.swift */; };
@@ -69,6 +71,8 @@
 		1E37773C2E938AA700DFB375 /* DishUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishUpdateViewController.swift; sourceTree = "<group>"; };
 		1E5126602E933DDD00EBB368 /* DishDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishDAO.swift; sourceTree = "<group>"; };
 		1E5126622E9340A200EBB368 /* Dish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dish.swift; sourceTree = "<group>"; };
+		1E5298AA2EA455BE00E3C027 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		1E5298AC2EA4716500E3C027 /* SessionLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionLogin.swift; sourceTree = "<group>"; };
 		1E66AE402EA226F1000B6ABF /* ImageDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDAO.swift; sourceTree = "<group>"; };
 		1E92B3A22E926FFA00078CFF /* DishAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishAddViewController.swift; sourceTree = "<group>"; };
 		1E92B3A42E9279E700078CFF /* DishForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishForm.swift; sourceTree = "<group>"; };
@@ -141,6 +145,15 @@
 			path = orderProgress;
 			sourceTree = "<group>";
 		};
+		1E5298A92EA4558F00E3C027 /* authenticate */ = {
+			isa = PBXGroup;
+			children = (
+				1E5298AA2EA455BE00E3C027 /* LoginViewController.swift */,
+				1E5298AC2EA4716500E3C027 /* SessionLogin.swift */,
+			);
+			path = authenticate;
+			sourceTree = "<group>";
+		};
 		1E95FBA92E91EC1800708109 = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +177,7 @@
 		1E95FBB42E91EC1800708109 /* assignment2 */ = {
 			isa = PBXGroup;
 			children = (
+				1E5298A92EA4558F00E3C027 /* authenticate */,
 				1E35B77D2E98FBEB001DB227 /* order */,
 				1E95FBF42E91FC6900708109 /* dish */,
 				1E95FBB52E91EC1800708109 /* AppDelegate.swift */,
@@ -346,6 +360,7 @@
 				1E66AE412EA226F1000B6ABF /* ImageDAO.swift in Sources */,
 				1E95FBB62E91EC1800708109 /* AppDelegate.swift in Sources */,
 				1E35B7872E99054C001DB227 /* OrderFinal.swift in Sources */,
+				1E5298AB2EA455BE00E3C027 /* LoginViewController.swift in Sources */,
 				1E35B7852E9901F4001DB227 /* OrderDBManager.swift in Sources */,
 				1E5126632E9340A200EBB368 /* Dish.swift in Sources */,
 				1E95FBB82E91EC1800708109 /* SceneDelegate.swift in Sources */,
@@ -360,6 +375,7 @@
 				1E5126612E933DDD00EBB368 /* DishDAO.swift in Sources */,
 				1E92B3A52E9279E700078CFF /* DishForm.swift in Sources */,
 				1E95FBC02E91EC1800708109 /* assignment2.xcdatamodeld in Sources */,
+				1E5298AD2EA4716500E3C027 /* SessionLogin.swift in Sources */,
 				1E3759922EA0B8E3006FF1DB /* OrderProgressDBManager.swift in Sources */,
 				1E35B7812E98FCD7001DB227 /* OrderAddViewController.swift in Sources */,
 				1E95FBED2E91F1B400708109 /* HomeViewController.swift in Sources */,

@@ -295,13 +295,14 @@ class DishDAO {
         
         var properties = string.components(separatedBy:",")
         
+        /*
         // usual logging
         print("Converting String: " + string + "\n" )
         print("Resulting dish properties:\n")
         properties.forEach{ dish in
             print(dish)
         }
-
+         */
         // remove whitespaces
         properties = properties.map {$0.trimmingCharacters(in: .whitespaces)}
         
