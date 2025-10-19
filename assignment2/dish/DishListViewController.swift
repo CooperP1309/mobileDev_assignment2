@@ -52,6 +52,20 @@ class DishListViewController: UIViewController, UITableViewDataSource, UITableVi
             textResponse.text = ""
         }
         //textResponse.text = "Access Level: \(Session.accessLevel)"
+
+        let bg = UIImageView(frame: view.bounds)
+            bg.image = UIImage(named: "manageBg")   // name from Assets.xcassets
+        
+            // screen fitting attributes
+            bg.contentMode = .scaleAspectFit // start from Fit
+            bg.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            bg.clipsToBounds = true
+
+            // Apply a custom zoom
+            bg.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+            view.insertSubview(bg, at: 0)
+            bg.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            view.insertSubview(bg, at: 0)
         
         // by default, nothing is selected...
         btnDelete.isEnabled = false

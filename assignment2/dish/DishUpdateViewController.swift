@@ -43,6 +43,9 @@ class DishUpdateViewController: UIViewController, UIImagePickerControllerDelegat
         super.viewDidLoad()
         hidesBottomBarWhenPushed = false // ensure to keep the bottom bar
         
+        imageDish.layer.borderWidth = 4               // thickness in points
+        imageDish.layer.borderColor = UIColor.black.cgColor
+        
         print("UpdateVC received:", id, dishName, dishType, ingredients, price, image)
         
         // setting of fields

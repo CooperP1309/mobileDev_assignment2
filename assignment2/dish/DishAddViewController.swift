@@ -32,9 +32,12 @@ class DishAddViewController: UIViewController, UIImagePickerControllerDelegate, 
     //  - text fields
     @IBOutlet weak var textResponse: UILabel!
     
+    // ---- INITIALIZATION FUNCTION ----
     override func viewDidLoad() {
         super.viewDidLoad()
         hidesBottomBarWhenPushed = false // ensure to keep the bottom bar
+        imageDish.layer.borderWidth = 4
+        imageDish.layer.borderColor = UIColor.black.cgColor
     }
     
     @IBAction func btnReturnn(_ sender: Any) {

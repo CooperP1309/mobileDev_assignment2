@@ -38,7 +38,7 @@ class LoginViewController: UIViewController {
             bg.clipsToBounds = true
 
             // Apply a custom zoom factor
-        bg.transform = CGAffineTransform(scaleX: 1.1, y: 1.5) // 1.0 = normal size, 1.2 = 20% zoom
+        bg.transform = CGAffineTransform(scaleX: 1.33, y: 1.5) // 1.0 = normal size, 1.2 = 20% zoom
             view.insertSubview(bg, at: 0)
         
             bg.autoresizingMask = [.flexibleWidth, .flexibleHeight]
